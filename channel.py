@@ -9,8 +9,7 @@ from lib.helper.chat import cooldown, feature, permission
 @feature('bingo')
 async def commandBingo(args: ChatCommandArgs) -> bool:
     bingoCard: str
-    bingoCard = await args.database.getChatProperty(args.chat.channel,
-                                                    'bingoCard')
+    bingoCard = await args.data.getChatProperty(args.chat.channel, 'bingoCard')
 
     if bingoCard:
         args.chat.send(f'Bingo Card: {bingoCard}')
@@ -24,8 +23,7 @@ async def commandBingo(args: ChatCommandArgs) -> bool:
 @permission('moderator')
 async def commandSetBingo(args: ChatCommandArgs) -> bool:
     bingoCard: Optional[str] = args.message.query or None
-    await args.database.setChatProperty(args.chat.channel, 'bingoCard',
-                                        bingoCard)
+    await args.data.setChatProperty(args.chat.channel, 'bingoCard', bingoCard)
     if bingoCard is None:
         args.chat.send('Bingo Card is now unset')
     else:
